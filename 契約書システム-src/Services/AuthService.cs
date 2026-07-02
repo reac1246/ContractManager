@@ -43,7 +43,7 @@ namespace ContractManager.Services
 
         public static string GenerateSalt()
         {
-            var saltBytes = new byte[32];
+            var saltBytes = new byte[16];
             using var rng = RandomNumberGenerator.Create();
             rng.GetBytes(saltBytes);
             return Convert.ToBase64String(saltBytes);
@@ -52,7 +52,7 @@ namespace ContractManager.Services
         public static string HashPassword(string password, string salt)
         {
             var saltBytes = Convert.FromBase64String(salt);
-            using var pbkdf2 = new Rfc2898DeriveBytes(password, saltBytes, 100000, HashAlgorithmName.SHA256);
+            using var pbkdf2 = new Rfc2898DeriveBytes(password, saltBytes, 300000, HashAlgorithmName.SHA256);
             var hashBytes = pbkdf2.GetBytes(32);
             return Convert.ToBase64String(hashBytes);
         }
