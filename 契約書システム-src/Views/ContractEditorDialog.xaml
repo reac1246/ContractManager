@@ -1,0 +1,62 @@
+<Window x:Class="ContractManager.Views.ContractEditorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="契約書編集" 
+        MinHeight="500" Width="600"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BackgroundBrush}">
+    
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Title -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="タイトル" Style="{StaticResource FormLabel}"/>
+            <TextBox x:Name="TitleBox" Style="{StaticResource ModernTextBox}"/>
+        </StackPanel>
+        
+        <!-- Content -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,16">
+            <TextBlock Text="契約内容" Style="{StaticResource FormLabel}"/>
+            <TextBox x:Name="ContentBox" 
+                     Style="{StaticResource ModernTextBox}"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto"
+                     Height="200"/>
+        </StackPanel>
+
+        <!-- Important Contract Options -->
+        <StackPanel Grid.Row="2" Margin="0,0,0,16">
+            <CheckBox x:Name="IsImportantCheckBox" Content="重要契約として作成する（事前説明と録音を必須にする）" 
+                      Margin="0,0,0,8" Checked="IsImportantCheckBox_Changed" Unchecked="IsImportantCheckBox_Changed"/>
+            <StackPanel x:Name="ExplanationPanel" Visibility="Collapsed">
+                <TextBlock Text="事前説明用HTML（任意）" Style="{StaticResource FormLabel}"/>
+                <TextBox x:Name="ExplanationHtmlBox" 
+                         Style="{StaticResource ModernTextBox}"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Auto"
+                         Height="100"/>
+            </StackPanel>
+        </StackPanel>
+        
+        <!-- Buttons -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="キャンセル" 
+                    Style="{StaticResource SecondaryButton}"
+                    Click="Cancel_Click"
+                    Margin="0,0,8,0"/>
+            <Button Content="保存" 
+                    Style="{StaticResource PrimaryButton}"
+                    Click="Save_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

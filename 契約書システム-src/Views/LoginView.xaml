@@ -1,0 +1,63 @@
+<UserControl x:Class="ContractManager.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource BackgroundBrush}">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Login Card -->
+        <Border Grid.Row="1" Style="{StaticResource Card}" 
+                Width="400" HorizontalAlignment="Center">
+            <StackPanel>
+                <!-- Logo / Title -->
+                <TextBlock Text="契約書管理システム" 
+                           Style="{StaticResource PageHeader}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,8"/>
+                <TextBlock Text="アカウント情報を入力してログイン"
+                           Style="{StaticResource PageSubheader}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,32"/>
+                
+                <!-- Username -->
+                <TextBlock Text="ユーザーID" Style="{StaticResource FormLabel}"/>
+                <TextBox x:Name="UsernameBox" 
+                         Style="{StaticResource ModernTextBox}"
+                         Margin="0,0,0,16"/>
+                
+                <!-- Password -->
+                <TextBlock Text="パスワード" Style="{StaticResource FormLabel}"/>
+                <PasswordBox x:Name="PasswordBox" 
+                             Style="{StaticResource ModernPasswordBox}"
+                             Margin="0,0,0,24"/>
+                
+                <!-- Error Message -->
+                <TextBlock x:Name="ErrorMessage" 
+                           Foreground="{StaticResource DangerBrush}"
+                           FontSize="14"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,16"
+                           Visibility="Collapsed"/>
+                
+                <!-- Login Button -->
+                <Button Content="ログイン" 
+                        Style="{StaticResource PrimaryButton}"
+                        Click="LoginButton_Click"
+                        HorizontalAlignment="Stretch"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Footer -->
+        <TextBlock Grid.Row="2" 
+                   Text="© 契約書管理システム" 
+                   Foreground="{StaticResource TextSecondaryBrush}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Margin="0,0,0,20"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,33 @@
+<Window x:Class="ContractManager.Views.ExplanationViewerDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="事前説明の確認" 
+        Height="600" Width="800"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BackgroundBrush}"
+        Closing="Window_Closing">
+    
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="🔴 録音中..." FontWeight="Bold" Foreground="Red" FontSize="16" Margin="0,0,0,4"/>
+            <TextBlock Text="※同意の強要を防ぐため、事前説明の確認中はマイクによる録音が行われます。録音データは暗号化され契約と紐づけられます。" 
+                       Foreground="{StaticResource TextBrush}" TextWrapping="Wrap"/>
+        </StackPanel>
+        
+        <Border Grid.Row="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Margin="0,0,0,16">
+            <WebBrowser x:Name="HtmlBrowser"/>
+        </Border>
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="説明を読み終えた" 
+                    Style="{StaticResource PrimaryButton}"
+                    Click="Finish_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

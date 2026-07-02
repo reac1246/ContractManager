@@ -1,0 +1,8 @@
+{
+    "ProjectName": "契約書システム",
+    "Language": "Dotnet",
+    "CompileOnPkg": true,
+    "ZipTarget": "bin/Release/net8.0-windows/win-x64/",
+    "IsSingleFile": true,
+    "DevelopmentDir": "C:/Users/Admin/Restore/契約書システム/契約書システム-src"
+}

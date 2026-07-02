@@ -1,0 +1,35 @@
+<Window x:Class="ContractManager.Views.SignatureViewerDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="署名表示" 
+        Height="350" Width="500"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BackgroundBrush}">
+    
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock x:Name="SignerName" Grid.Row="0"
+                   FontSize="16" FontWeight="SemiBold"
+                   Foreground="{StaticResource TextBrush}"
+                   Margin="0,0,0,16"/>
+        
+        <Border Grid.Row="1" 
+                BorderBrush="{StaticResource BorderBrush}" 
+                BorderThickness="1" 
+                CornerRadius="8"
+                Background="White">
+            <Image x:Name="SignatureImage" Stretch="Uniform" Margin="8"/>
+        </Border>
+        
+        <Button Grid.Row="2" Content="閉じる" 
+                Style="{StaticResource SecondaryButton}"
+                Click="Close_Click"
+                HorizontalAlignment="Right"
+                Margin="0,16,0,0"/>
+    </Grid>
+</Window>

@@ -1,0 +1,2 @@
+C:\Users\Admin\契約書\Release\ContractManager.pdb
+C:\Users\Admin\契約書\Release\ContractManager.exe

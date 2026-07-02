@@ -1,0 +1,293 @@
+<UserControl x:Class="ContractManager.Views.AdminDashboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource BackgroundBrush}">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{StaticResource CardBrush}" Padding="24,16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Text="管理者ダッシュボード" 
+                               Style="{StaticResource PageHeader}"
+                               FontSize="24"/>
+                    <TextBlock x:Name="WelcomeText"
+                               Style="{StaticResource PageSubheader}"
+                               FontSize="14"/>
+                </StackPanel>
+                
+                <Button Grid.Column="1" 
+                        Content="ログアウト" 
+                        Style="{StaticResource SecondaryButton}"
+                        Click="LogoutButton_Click"/>
+            </Grid>
+        </Border>
+        
+        <!-- Tab Control -->
+        <TabControl Grid.Row="1" Margin="24">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Padding" Value="16,8"/>
+                    <Setter Property="FontSize" Value="14"/>
+                </Style>
+            </TabControl.Resources>
+            
+            <!-- Contract Management Tab -->
+            <TabItem Header="契約書管理">
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Toolbar -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
+                        <Button Content="新規作成" 
+                                Style="{StaticResource PrimaryButton}"
+                                Click="NewContract_Click"
+                                Margin="0,0,8,0"/>
+                        <Button Content="編集" 
+                                Style="{StaticResource SecondaryButton}"
+                                Click="EditContract_Click"
+                                Margin="0,0,8,0"/>
+                        <Button Content="削除" 
+                                Style="{StaticResource DangerButton}"
+                                Click="DeleteContract_Click"/>
+                    </StackPanel>
+                    
+                    <!-- Contract List -->
+                    <DataGrid x:Name="ContractGrid" Grid.Row="1"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              Background="White"
+                              BorderBrush="{StaticResource BorderBrush}"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="{StaticResource BorderBrush}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="タイトル" Binding="{Binding Title}" Width="*"/>
+                            <DataGridTextColumn Header="作成日" Binding="{Binding CreatedAt, StringFormat=yyyy/MM/dd HH:mm}" Width="150"/>
+                            <DataGridTextColumn Header="更新日" Binding="{Binding UpdatedAt, StringFormat=yyyy/MM/dd HH:mm}" Width="150"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            
+            <!-- User Management Tab -->
+            <TabItem Header="ユーザー管理">
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Toolbar -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
+                        <Button Content="新規作成" 
+                                Style="{StaticResource PrimaryButton}"
+                                Click="NewUser_Click"
+                                Margin="0,0,8,0"/>
+                        <Button Content="編集" 
+                                Style="{StaticResource SecondaryButton}"
+                                Click="EditUser_Click"
+                                Margin="0,0,8,0"/>
+                        <Button Content="削除" 
+                                Style="{StaticResource DangerButton}"
+                                Click="DeleteUser_Click"/>
+                    </StackPanel>
+                    
+                    <!-- User List -->
+                    <DataGrid x:Name="UserGrid" Grid.Row="1"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              Background="White"
+                              BorderBrush="{StaticResource BorderBrush}"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="{StaticResource BorderBrush}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ユーザーID" Binding="{Binding Username}" Width="*"/>
+                            <DataGridTextColumn Header="氏名（英語）" Binding="{Binding NameEnglish}" Width="150"/>
+                            <DataGridTextColumn Header="作成日" Binding="{Binding CreatedAt, StringFormat=yyyy/MM/dd}" Width="120"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            
+            <!-- Assignment Tab -->
+            <TabItem Header="契約紐づけ">
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Contracts -->
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="契約書" Style="{StaticResource FormLabel}" FontSize="16" FontWeight="SemiBold"/>
+                        <ListBox x:Name="AssignContractList" Height="400"
+                                 BorderBrush="{StaticResource BorderBrush}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}" Padding="8,4"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                    
+                    <!-- Buttons -->
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="16">
+                        <Button Content="紐づけ →" 
+                                Style="{StaticResource PrimaryButton}"
+                                Click="AssignContract_Click"
+                                Margin="0,0,0,8"/>
+                        <Button Content="← 解除" 
+                                Style="{StaticResource SecondaryButton}"
+                                Click="UnassignContract_Click"/>
+                    </StackPanel>
+                    
+                    <!-- Users -->
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="ユーザー" Style="{StaticResource FormLabel}" FontSize="16" FontWeight="SemiBold"/>
+                        <ListBox x:Name="AssignUserList" Height="400"
+                                 BorderBrush="{StaticResource BorderBrush}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Username}" Padding="8,4"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            
+            <!-- Assignments Overview Tab -->
+            <TabItem Header="紐づけ状況">
+                <Grid Margin="16">
+                    <DataGrid x:Name="AssignmentGrid"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              Background="White"
+                              BorderBrush="{StaticResource BorderBrush}"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="{StaticResource BorderBrush}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="契約書" Binding="{Binding ContractTitle}" Width="*"/>
+                            <DataGridTextColumn Header="ユーザー" Binding="{Binding Username}" Width="150"/>
+                            <DataGridTextColumn Header="ステータス" Binding="{Binding StatusText}" Width="120"/>
+                            <DataGridTextColumn Header="紐づけ日" Binding="{Binding AssignedAt, StringFormat=yyyy/MM/dd}" Width="120"/>
+                            <DataGridTextColumn Header="対応日" Binding="{Binding RespondedAt, StringFormat=yyyy/MM/dd}" Width="120"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            
+            <!-- Dispute Management Tab -->
+            <TabItem Header="異議申し立て管理">
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Text="異議申し立て・問題のある契約一覧" 
+                               FontSize="16" FontWeight="SemiBold" Margin="0,0,0,16"/>
+                    
+                    <DataGrid x:Name="DisputeGrid" Grid.Row="1"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              Background="White"
+                              BorderBrush="{StaticResource BorderBrush}"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="{StaticResource BorderBrush}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="契約書" Binding="{Binding ContractTitle}" Width="150"/>
+                            <DataGridTextColumn Header="ユーザー" Binding="{Binding Username}" Width="100"/>
+                            <DataGridTextColumn Header="ステータス" Binding="{Binding StatusText}" Width="100"/>
+                            <DataGridTextColumn Header="理由" Binding="{Binding Reason}" Width="*"/>
+                            <DataGridTextColumn Header="発生日" Binding="{Binding RespondedAt, StringFormat=yyyy/MM/dd}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,16,0,0">
+                        <Button Content="解決済みにする" 
+                                Style="{StaticResource SuccessButton}"
+                                Click="ResolveDispute_Click"
+                                Margin="0,0,8,0"/>
+                        <Button Content="代理同意（電話対応）" 
+                                Style="{StaticResource PrimaryButton}"
+                                Click="ProxyAgree_Click"
+                                Margin="0,0,8,0"/>
+                        <Button Content="保留に戻す" 
+                                Style="{StaticResource SecondaryButton}"
+                                Click="ResetToPending_Click"
+                                Margin="0,0,8,0"/>
+                        <Button Content="詳細を表示" 
+                                Style="{StaticResource SecondaryButton}"
+                                Click="ViewDisputeDetail_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            
+            <!-- Completed Contracts Tab -->
+            <TabItem Header="締結済み契約">
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Text="同意済み契約一覧（署名情報付き）" 
+                               FontSize="16" FontWeight="SemiBold" Margin="0,0,0,16"/>
+                    
+                    <DataGrid x:Name="CompletedGrid" Grid.Row="1"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              Background="White"
+                              BorderBrush="{StaticResource BorderBrush}"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="{StaticResource BorderBrush}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="契約書" Binding="{Binding ContractTitle}" Width="150"/>
+                            <DataGridTextColumn Header="ユーザー" Binding="{Binding Username}" Width="100"/>
+                            <DataGridTextColumn Header="署名氏名（英語）" Binding="{Binding SignatureName}" Width="120"/>
+                            <DataGridTextColumn Header="生年月日" Binding="{Binding SignatureBirthDate, StringFormat=yyyy/MM/dd}" Width="100"/>
+                            <DataGridTextColumn Header="同意種別" Binding="{Binding AgreementType}" Width="100"/>
+                            <DataGridTextColumn Header="締結日" Binding="{Binding RespondedAt, StringFormat=yyyy/MM/dd}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,16,0,0">
+                        <Button Content="署名を表示" 
+                                Style="{StaticResource PrimaryButton}"
+                                Click="ViewSignature_Click"
+                                Margin="0,0,8,0"/>
+                        <Button Content="追加の検証データ" 
+                                Style="{StaticResource PrimaryButton}"
+                                Click="ViewVerificationData_Click"
+                                Margin="0,0,8,0"/>
+                        <Button Content="詳細を表示" 
+                                Style="{StaticResource SecondaryButton}"
+                                Click="ViewCompletedDetail_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
